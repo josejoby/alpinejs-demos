@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <title>Tic Tac Toe - Alpinejs</title>
+</head>
+
+<body>
+
+    <div class="playarea">
+        <div class="board" x-data="board">
+            <div class="row">
+                <span class="info" x-text="showInfo()"></span>
+            </div>
+            <div class="row">
+                <button class="cell" type="button" x-text="gameboard[0]" @click="markMove(0)"></button>
+                <button class="cell" type="button" x-text="gameboard[1]" @click="markMove(1)">></button>
+                <button class="cell" type="button" x-text="gameboard[2]" @click="markMove(2)">></button>
+            </div>
+            <div class="row">
+                <button class="cell" type="button" x-text="gameboard[3]" @click="markMove(3)">></button>
+                <button class="cell" type="button" x-text="gameboard[4]" @click="markMove(4)">></button>
+                <button class="cell" type="button" x-text="gameboard[5]" @click="markMove(5)">></button>
+            </div>
+            <div class="row">
+                <button class="cell" type="button" x-text="gameboard[6]" @click="markMove(6)">></button>
+                <button class="cell" type="button" x-text="gameboard[7]" @click="markMove(7)">></button>
+                <button class="cell" type="button" x-text="gameboard[8]" @click="markMove(8)">></button>
+            </div>
+            <div class="row">
+                <button type="button" class="resetButton" x-init="resetBoard" @click="resetBoard">Reset</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('board', () => {
+                return {
+                    winCombos: [
+                        [0, 1, 2],
+                        [0, 3, 6],
+                        [6, 7, 8],
+                        [2, 5, 8],
+                        [1, 4, 7],
+                        [3, 4, 5],
+                        [0, 4, 8],
+                        [2, 4, 9],
+                    ],
+                    markMove(pos) {                        
+                        if (!this.winner && this.gameboard.some(item=>!item) && this.gameboard[pos]==null) {
+                            const currPlayer = this.isplayer1 ? this.player1 : this.player2
+                            this.gameboard[pos] = currPlayer;
+                            if (this.checkWin(currPlayer)) {
+                                this.winner = currPlayer;
+                            } else {
+                                this.isplayer1 = !this.isplayer1;
+                            }
+                        }
+
+                    },
+                    checkWin(currPlayer) {
+                        for (let idx = 0; idx < this.winCombos.length; idx++) {
+                            const w = this.winCombos[idx];
+                            if (this.gameboard[w[0]] == currPlayer && this.gameboard[w[1]] == currPlayer && this.gameboard[w[2]] === currPlayer) {
+                                return true
+                            }
+                        }
+                        return false;
+                    },
+                    resetBoard() {
+                        this.gameboard= Array(9).fill(null);
+                        this.player1= 'x';
+                        this.player2= 'o';
+                        this.isplayer1= true;
+                        this.winner= undefined;
+                    },
+                    showInfo() {
+                        if (this.winner) {
+                            return `${this.winner} wins!`
+                        } else {
+                            return this.isplayer1 ? `${this.player1}'s move` : `${this.player2}'s move`
+                        }
+                    },
+                }
+            })
+        })
+    </script>
+</body>
+
+</html>

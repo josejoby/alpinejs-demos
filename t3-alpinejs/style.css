@@ -1,0 +1,58 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+
+.playarea {
+    background-color: bisque;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.board {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.row {
+    display: flex;
+    justify-content: center;
+}
+
+.cell {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 5px;
+    background-color: #00ffff;
+    border: 1px solid black;
+}
+
+.cell:hover{
+ background-color: #02b4b4;
+}
+
+.resetButton {
+    width: 5rem;
+    height: 2rem;
+    background-color:#ff2f00;
+    color: #ffff;
+    font-weight: bold;
+    border-radius: 0.5rem;
+    border: none;
+    margin: 0.5rem;
+}
+
+.row .info {
+    
+}
+
+.row .info:first-letter {
+    text-transform: uppercase;
+}
+
